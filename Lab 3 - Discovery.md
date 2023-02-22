@@ -126,6 +126,9 @@ Perform **System Information Discovery**
 		'==== Terminal Services Remote Host List (who has this system remoted into?) ====' >> $outputFile
 		reg query 'HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Default' 2>&1 >> $outputFile
 		'' >> $outputFile
+		'==== Local Accounts ====' >> $outputFile
+		net user 2>&1 >> $outputFile
+		'' >> $outputFile
 		'==== Local Administrators ====' >> $outputFile
 		net localgroup administrators 2>&1 >> $outputFile 
 		'' >> $outputFile
