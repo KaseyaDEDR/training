@@ -137,6 +137,9 @@ Perform **System Information Discovery**
 		'' >> $outputFile
 		'==== Exchange Administrators ====' >> $outputFile
 		net group 'Exchange Trusted Subsystem' /domain 2>&1 >> $outputFile  
+		'' >> $outputFile
+		'==== Installed Software ====' >> $outputFile
+		Get-WmiObject -Class Win32_Product | select Name, Vendor, Version | Sort-Object Vendor, Name | ft -auto >> $outputFile
 		Start-Sleep -m $n
 	"@
 	Powershell.exe -nop -command $cmd
