@@ -382,8 +382,6 @@ A hacker can than capture these passwords and misuse them in the rest of their a
 reg add HKLM\SYSTEM\CurrentControlSet\Control\Security\Providers\WDigest /v UseLogonCredential /t REG_DWORD /d 0 /f
 Start-Sleep 3
 
-
-
 Write-Host -ForegroundColor Red @'
 === Attacker Perspective ===
 ATT&CK Tactic: Credential Access
@@ -412,6 +410,18 @@ Start-Sleep 10
 Get-Process Outlook | Stop-Process
 # Print message telling them Outlook is vulnerable and they should contact an IT Adminstrator before using it again."
 Write-Host "WARNING: Outlook is running a vulnerable version and is susceptable to attack. Please contact your administrator to update the version before using it again."
+
+
+# Do a popup
+Add-Type -AssemblyName PresentationCore,PresentationFramework
+$ButtonType = [System.Windows.MessageBoxButton]::Ok
+$MessageIcon = [System.Windows.MessageBoxImage]::Warning
+$MessageBody = "WARNING: Outlook is running a vulnerable version and is susceptable to attack. Please contact your administrator to update the version before using it again."
+$MessageTitle = "Outlook is Vulnerable!"
+
+$Result = [System.Windows.MessageBox]::Show($MessageBody,$MessageTitle,$ButtonType,$MessageIcon)
+
+
 
 Write-Host -ForegroundColor Cyan "... Sleeping for 3600 seconds"
 #Start-Sleep 3600 # 1 hour
