@@ -423,8 +423,8 @@ $Result = [System.Windows.MessageBox]::Show($MessageBody,$MessageTitle,$ButtonTy
 
 
 
-Write-Host -ForegroundColor Cyan "... Sleeping for 3600 seconds"
-#Start-Sleep 3600 # 1 hour
+Write-Host -ForegroundColor Cyan "... Sleeping for 30 seconds"
+Start-Sleep 30
 
 
 # Procdump
