@@ -2,7 +2,7 @@
 title: ATT&CK - Execution Phase
 description: Demonstrate the execution phase of an attack
 author: Chris Gerritz, Datto
-created: 02/19/2023
+created: 04/07/2025
 achievements:
 duration: 20
 range:
@@ -67,7 +67,8 @@ Ignore this if you already ran it in a previous lab and are re-using the same Po
 	#Define a random number (This will be used to force Datto EDR not to deduplicate repeated commands during testing)
 	$n = 1000+$(Get-Random -Max 999)
 	# Bypass signed script controls
-	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass
+	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force
+
 	```
 -----
 ## Instructions

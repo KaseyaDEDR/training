@@ -2,7 +2,7 @@
 title: Triaging with EDR
 description: Introduce post-compromise attack behaviors and EDR defenses
 author: Chris Gerritz, Datto
-created: 02/19/2023
+created: 04/07/2025
 achievements:
 duration: 40
 range:

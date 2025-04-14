@@ -2,7 +2,7 @@
 title: ATT&CK - Defense Evasion Phase
 description: Introduce post-compromise attack behaviors and EDR defenses
 author: Chris Gerritz, Datto
-created: 02/19/2023
+created: 04/07/2025
 achievements:
 duration: 10
 range:
@@ -61,7 +61,7 @@ Ignore this if you already ran it in a previous lab and are re-using the same Po
 	#Define a random number (This will be used to force Datto EDR not to deduplicate repeated commands during testing)
 	$n = 1000+$(Get-Random -Max 999)
 	# Bypass signed script controls
-	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass
+	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force
 	```
 
 ## Instructions
@@ -93,8 +93,8 @@ Use the Service Control Manager (sc.exe) to perform a **Disable Security Tools**
 	```PowerShell
 	Write-Host -ForegroundColor Cyan "Initiating Defense Evasion - T1089 - Disabling Security Tools"
 	Write-Host "Disabling Defender..."
-	sc config WinDefend start= disabled
-	sc stop WinDefend
+	& sc.exe config WinDefend start= disabled
+	* sc.exe stop WinDefend
 	```
 
 	
