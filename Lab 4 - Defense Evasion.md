@@ -108,7 +108,7 @@ notahacker               [youraccount]                 WDAGUtilityAccount
 - [ATT&CK T1564.002-Hide user from userlist](https://attack.mitre.org/techniques/T1564/002/)
 - Copy and paste this command into the terminal:
 ```Powershell
-	$cmd = @"
+$cmd = @"
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" /t REG_DWORD /f /d 0 /v "notahacker"
 Start-Sleep -Milliseconds $n
 "@
