@@ -147,7 +147,7 @@ Invoke-Expression $cmd
 # Output file info
 Get-Item $outputFile
 
-	```
+```
 <!--SAMPLE OUTPUT - Domain Inquries will not return unless DC joined. 
 ====
 Hostname
