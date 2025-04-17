@@ -1,20 +1,20 @@
 ---
-title: ATT&CK - Impact Phase
-description: Introduce post-compromise attack behaviors and EDR defenses
-author: Chris Gerritz, Datto
-created: 04/14/2025
-achievements:
-duration: 10
-range:
+Title: ATT&CK - Impact Phase
+Description: Introduce post-compromise attack behaviors and EDR defenses
+Author: Chris Gerritz, Datto
+Created: 04/17/2025
+Achievements:
+Duration: 10
+Range:
 - Windows
-applications:
+Applications:
 - Terminal (Command prompt)
 - PowerShell
 - Datto EDR
 - SysInternals
 - LibreOffice
 - Gimp
-external:
+External:
 - attack.mitre.org
 - rightofboom.infocyte.com
 - infocyte-support.s3.us-east-2.amazonaws.com/extension-utilities/wallpaper.jpg

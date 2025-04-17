@@ -1,20 +1,20 @@
 ---
-title: ATT&CK - Defense Evasion Phase
-description: Introduce post-compromise attack behaviors and EDR defenses
-author: Chris Gerritz, Datto
-created: 04/07/2025
-achievements:
-duration: 10
-range:
+Title: ATT&CK - Defense Evasion Phase
+Description: Introduce post-compromise attack behaviors and EDR defenses
+Author: Chris Gerritz, Datto
+Created: 04/07/2025
+Achievements:
+Duration: 10
+Range:
 - Windows
-applications:
+Applications:
 - Terminal (Command prompt)
 - PowerShell
 - Datto EDR
 - SysInternals
 - Office
 - Adobe Reader
-external:
+External:
 - attack.mitre.org
 - rightofboom.infocyte.com
 - 

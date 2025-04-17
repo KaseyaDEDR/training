@@ -1,20 +1,20 @@
 ---
-title: ATT&CK - Execution Phase
-description: Demonstrate the execution phase of an attack
-author: Chris Gerritz, Datto
-created: 04/07/2025
-achievements:
-duration: 20
-range:
+Title: ATT&CK - Execution Phase
+Description: Demonstrate the execution phase of an attack
+Author: Chris Gerritz, Datto
+Created: 04/07/2025
+Achievements:
+Duration: 20
+Range:
 - Windows
-applications:
+Applications:
 - Terminal (Command prompt)
 - PowerShell
 - Datto EDR
 - SysInternals
 - Office
 - Adobe Reader
-external:
+External:
 - attack.mitre.org
 - rightofboom.infocyte.com
 - live.sysinternals.com/psexec.exe

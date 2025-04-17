@@ -1,16 +1,16 @@
 ---
-title: Triaging with EDR
-description: Introduce post-compromise attack behaviors and EDR defenses
-author: Chris Gerritz, Datto
-created: 04/07/2025
-achievements:
-duration: 40
-range:
+Title: Triaging with EDR
+Description: Introduce post-compromise attack behaviors and EDR defenses
+Author: Chris Gerritz, Datto
+Created: 04/17/2025
+Achievements:
+Duration: 40
+Range:
 - None
-applications:
+Applications:
 - Browser
 - Datto EDR
-external:
+External:
 - rightofboom.infocyte.com
 - 
 ---

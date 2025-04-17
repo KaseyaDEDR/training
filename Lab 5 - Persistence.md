@@ -1,20 +1,20 @@
 ---
-title: ATT&CK - Persistence Phase
-description: Introduce post-compromise attack behaviors and EDR defenses
-author: Chris Gerritz, Datto
-created: 02/19/2023
-achievements:
-duration: 15
-range:
+Title: ATT&CK - Persistence Phase
+Description: Introduce post-compromise attack behaviors and EDR defenses
+Author: Chris Gerritz, Datto
+Created: 04/14/2025
+Achievements:
+Duration: 15
+Range:
 - Windows
-applications:
+Applications:
 - Terminal (Command prompt)
 - PowerShell
 - Datto EDR
 - SysInternals
 - Office
 - Adobe Reader
-external:
+External:
 - attack.mitre.org
 - rightofboom.infocyte.com
 - www.eicar.org/download/eicar.com.txt

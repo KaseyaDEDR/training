@@ -1,10 +1,10 @@
 ---
-title: ATT&CK - Lateral Movement Phase
-description: Simulate lateral movement techniques used by attackers within a network
-author: Chris Gerritz, Datto
-created: 04/07/2025
-achievements:
-duration: 15
+Title: ATT&CK - Lateral Movement Phase
+Description: Simulate lateral movement techniques used by attackers within a network
+Author: Chris Gerritz, Datto
+Created: 04/17/2025
+Achievements:
+Duration: 15
 ---
 
 ## Description
