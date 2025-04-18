@@ -12,8 +12,6 @@ Applications:
 - PowerShell
 - Datto EDR
 - SysInternals
-- Office
-- Adobe Reader
 External:
 - attack.mitre.org
 - allitshop.infocyte.com
@@ -54,7 +52,7 @@ Ignore this if you already ran it in a previous lab and are re-using the same Po
 	#Define a random number (This will be used to force Datto EDR not to deduplicate repeated commands during testing)
 	$n = 1000+$(Get-Random -Max 999)
 	# Bypass signed script controls
-	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass
+	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force
 	```
 
 ## Requirements
@@ -103,25 +101,29 @@ Add a shortcut to malware in the **Autostart Folder**
 - MITRE ATT&CK Technique: [ATT&CK T1547.009 - Persistence - Autostart Folder](https://attack.mitre.org/techniques/T1547/009)
 - Copy and paste this command into the terminal:
 	```PowerShell
-	# Autostart Folder with EICAR file
+	# Autostart Folder with EICAR test string
 	Write-Host "Adding T1547.009 - Malicious Shortcut Link Persistence with detectable malware (EICAR File)"
-	Write-Host "Downloading IECAR file..."
-	Invoke-WebRequest -Uri "https://www.eicar.org/download/eicar.com.txt" -OutFile "$env:USERPROFILE\EICAR.exe"
-	$cmd = @'
-		$Target = "$env:USERPROFILE\EICAR.exe"
-		$ShortcutLocation = "$home\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\evil_calc.lnk"
-		$WScriptShell = New-Object -ComObject WScript.Shell
-		$Create = $WScriptShell.CreateShortcut($ShortcutLocation)
-		$Create.TargetPath = $Target
-		$Create.Save()
-		$ShortcutLocation = "$home\Desktop\evil_calc.lnk"
-		$WScriptShell = New-Object -ComObject WScript.Shell
-		$Create = $WScriptShell.CreateShortcut($ShortcutLocation)
-		$Create.TargetPath = $Target
-		$Create.Save()
-	'@
+	Write-Host "Writing EICAR file manually..."
+
+	$EICARString = 'X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*'
+	$EICARString | Out-File -Encoding ASCII -FilePath "$env:USERPROFILE\EICAR.exe" -Force
+	$startupShortcut = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\evil_calc.lnk"
+	$desktopShortcut = "$env:USERPROFILE\Desktop\evil_calc.lnk"
+
+	$cmd = @"
+	`$WScriptShell = New-Object -ComObject WScript.Shell
+	`$Shortcut1 = `$WScriptShell.CreateShortcut('$startupShortcut')
+	`$Shortcut1.TargetPath = '$env:USERPROFILE\EICAR.exe'
+	`$Shortcut1.Save()
+
+	`$Shortcut2 = `$WScriptShell.CreateShortcut('$desktopShortcut')
+	`$Shortcut2.TargetPath = '$env:USERPROFILE\EICAR.exe'
+	`$Shortcut2.Save()
+	"@
+
 	$cmd += "`nStart-Sleep -m $n"
-	powershell.exe -nop -command $cmd
+
+	powershell.exe -NoProfile -Command $cmd
 	```
 
 
@@ -154,4 +156,4 @@ Create a fileless reference in the **Registry Run Keys**
 	$cmd = "iex ([Text.Encoding]::ASCII.GetString([Convert]::FromBase64String((gp `"HKCU:\Software\Classes\RedTeamTest`").RT))); Start-Sleep -m $n"
 	powershell.exe -nop -command $cmd
 	```
-	s> If you are successful, powershell will display a message in red.
+	s> If you are successful, powershell will display a message in green.
