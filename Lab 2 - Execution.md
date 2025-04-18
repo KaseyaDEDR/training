@@ -16,7 +16,7 @@ Applications:
 - Adobe Reader
 External:
 - attack.mitre.org
-- rightofboom.infocyte.com
+- allitshop.infocyte.com
 - live.sysinternals.com/psexec.exe
 - github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.001/src/x64/T1055.001.dll
 ---

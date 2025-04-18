@@ -16,7 +16,7 @@ Applications:
 - Gimp
 External:
 - attack.mitre.org
-- rightofboom.infocyte.com
+- allitshop.infocyte.com
 - infocyte-support.s3.us-east-2.amazonaws.com/extension-utilities/wallpaper.jpg
 ---
 

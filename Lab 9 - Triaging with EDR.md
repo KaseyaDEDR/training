@@ -11,7 +11,7 @@ Applications:
 - Browser
 - Datto EDR
 External:
-- rightofboom.infocyte.com
+- allitshop.infocyte.com
 - 
 ---
 

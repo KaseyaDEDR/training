@@ -16,7 +16,7 @@ Applications:
 - Adobe Reader
 External:
 - attack.mitre.org
-- rightofboom.infocyte.com
+- allitshop.infocyte.com
 - raw.githubusercontent.com/PowerShellMafia/PowerSploit/f650520c4b1004daf8b3ec08007a0b945b91253a/Exfiltration/Invoke-Mimikatz.ps1
 - live.sysinternals.com/procdump.exe
 ---

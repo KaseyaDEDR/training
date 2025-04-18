@@ -15,7 +15,7 @@ Applications:
 - Office
 - Adobe Reader
 External:
-- rightofboom.infocyte.com
+- allitshop.infocyte.com
 - prismlearning.cloud
 ---
 

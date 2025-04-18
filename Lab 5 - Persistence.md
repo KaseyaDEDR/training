@@ -16,7 +16,7 @@ Applications:
 - Adobe Reader
 External:
 - attack.mitre.org
-- rightofboom.infocyte.com
+- allitshop.infocyte.com
 - www.eicar.org/download/eicar.com.txt
 ---
 
