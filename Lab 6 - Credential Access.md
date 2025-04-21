@@ -1,22 +1,22 @@
 ---
-title: ATT&CK - Credential Access Phase
-description: Introduce post-compromise attack behaviors and EDR defenses
-author: Chris Gerritz, Datto
-created: 02/19/2023
-achievements:
-duration: 10
-range:
+Title: ATT&CK - Credential Access & Exfiltration Phase
+Description: Introduce post-compromise attack behaviors and EDR defenses
+Author: Chris Gerritz, Datto
+Created: 04/14/2025
+Achievements:
+Duration: 10
+Range:
 - Windows
-applications:
+Applications:
 - Terminal (Command prompt)
 - PowerShell
 - Datto EDR
 - SysInternals
 - Office
 - Adobe Reader
-external:
+External:
 - attack.mitre.org
-- rightofboom.infocyte.com
+- allitshop.infocyte.com
 - raw.githubusercontent.com/PowerShellMafia/PowerSploit/f650520c4b1004daf8b3ec08007a0b945b91253a/Exfiltration/Invoke-Mimikatz.ps1
 - live.sysinternals.com/procdump.exe
 ---

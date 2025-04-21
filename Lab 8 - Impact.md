@@ -1,22 +1,22 @@
 ---
-title: ATT&CK - Impact Phase
-description: Introduce post-compromise attack behaviors and EDR defenses
-author: Chris Gerritz, Datto
-created: 02/19/2023
-achievements:
-duration: 10
-range:
+Title: ATT&CK - Impact Phase
+Description: Introduce post-compromise attack behaviors and EDR defenses
+Author: Chris Gerritz, Datto
+Created: 04/17/2025
+Achievements:
+Duration: 10
+Range:
 - Windows
-applications:
+Applications:
 - Terminal (Command prompt)
 - PowerShell
 - Datto EDR
 - SysInternals
 - LibreOffice
 - Gimp
-external:
+External:
 - attack.mitre.org
-- rightofboom.infocyte.com
+- allitshop.infocyte.com
 - infocyte-support.s3.us-east-2.amazonaws.com/extension-utilities/wallpaper.jpg
 ---
 
@@ -61,7 +61,7 @@ Ignore this if you already ran it in a previous lab and are re-using the same Po
 	#Define a random number (This will be used to force Datto EDR not to deduplicate repeated commands during testing)
 	$n = 1000+$(Get-Random -Max 999)
 	# Bypass signed script controls
-	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass
+	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force
 	```
 
 ## Instructions
@@ -89,66 +89,62 @@ Delete the shadow copy backups to perform **Inhibit System Recovery** technique
 Execute a **Wallpaper Defacement** by changing the background to a ransomware message. 
 - MITRE ATT&CK Technique: [ATT&CK T1491 - Impact - Defacement: Internal Defacement](https://attack.mitre.org/techniques/T1491)
 - Copy and paste this command into the terminal:
-	```PowerShell
-	# Wallpaper Defacement
-	Write-Host -ForegroundColor Cyan "Initiating technique T1491 - Defacement: Internal Defacement"
-	$wallpaperURL = "https://infocyte-support.s3.us-east-2.amazonaws.com/extension-utilities/wallpaper.jpg"
-	$wallpaperPath = "$env:temp\wallpaper.jpg"
-	Invoke-WebRequest $wallpaperURL -OutFile $wallpaperPath
-	$oldwallpaperPath = Get-ItemProperty "HKCU:\Control Panel\Desktop" | select WallPaper -ExpandProperty wallpaper
-	#Apply
-	$cmd = @"
-		New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -PropertyType String -Value 6 -Force
-		New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -PropertyType String -Value 0 -Force
-		Add-Type -TypeDefinition @' 
-		using System; 
-		using System.Runtime.InteropServices;
-		
-		public class Params
-		{ 
-			[DllImport("User32.dll",CharSet=CharSet.Unicode)] 
-			public static extern int SystemParametersInfo (Int32 uAction, 
-														Int32 uParam, 
-														String lpvParam, 
-														Int32 fuWinIni);
-		}
-		'@ 
-	
-		`$SPI_SETDESKWALLPAPER = 0x0014
-		`$UpdateIniFile = 0x01
-		`$SendChangeEvent = 0x02
-		`$fWinIni = `$UpdateIniFile -bor `$SendChangeEvent
+```PowerShell
+(Get-ItemProperty 'HKCU:\Control Panel\Desktop').WallPaper | Set-Content "$env:TEMP\original_wallpaper.txt"
 
-		`$ret = [Params]::SystemParametersInfo(`$SPI_SETDESKWALLPAPER, 0, '$wallpaperPath', `$fWinIni)
-	"@
-	powershell.exe -nop -command $cmd
-	```
+powershell -NoProfile -NoLogo -ExecutionPolicy Bypass -Command {
+    Write-Host -ForegroundColor Cyan "Initiating technique T1491 - Defacement: Internal Defacement";
+    Start-Sleep -Seconds 2;
+
+    $wallpaperURL = "https://infocyte-support.s3.us-east-2.amazonaws.com/extension-utilities/wallpaper.jpg";
+    $wallpaperPath = "$env:temp\wallpaper.jpg";
+
+    Invoke-WebRequest $wallpaperURL -OutFile $wallpaperPath;
+    Start-Sleep -Milliseconds 1000;
+
+    Set-ItemProperty -Path 'HKCU:\Control Panel\Desktop' -Name WallpaperStyle -Value 10;
+    Set-ItemProperty -Path 'HKCU:\Control Panel\Desktop' -Name TileWallpaper -Value 0;
+
+    Add-Type -TypeDefinition @'
+        using System;
+        using System.Runtime.InteropServices;
+        public class Params {
+            [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+            public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+        }
+'@;
+
+    $UpdateIniFile = 0x01;
+    $SendChangeEvent = 0x02;
+    $fWinIni = $UpdateIniFile -bor $SendChangeEvent;
+
+    [Params]::SystemParametersInfo(0x0014, 0, $wallpaperPath, $fWinIni);
+}
+```
 - [Optional] Restore:
-	```Powershell
-	# Restore
-	$cmd = @"
-		New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -PropertyType String -Value 6 -Force
-		New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -PropertyType String -Value 0 -Force
-		Add-Type -TypeDefinition @' 
-		using System; 
-		using System.Runtime.InteropServices;
-		
-		public class Params
-		{ 
-			[DllImport("User32.dll",CharSet=CharSet.Unicode)] 
-			public static extern int SystemParametersInfo (Int32 uAction, 
-														Int32 uParam, 
-														String lpvParam, 
-														Int32 fuWinIni);
-		}
-		'@ 
-	
-		`$SPI_SETDESKWALLPAPER = 0x0014
-		`$UpdateIniFile = 0x01
-		`$SendChangeEvent = 0x02
-		`$fWinIni = `$UpdateIniFile -bor `$SendChangeEvent
+```Powershell
+powershell -NoProfile -NoLogo -ExecutionPolicy Bypass -Command {
+    $oldPath = Get-Content "$env:TEMP\original_wallpaper.txt"
+    Write-Host -ForegroundColor Cyan "Restoring original wallpaper...";
+    Start-Sleep -Seconds 2;
 
-		`$ret = [Params]::SystemParametersInfo(`$SPI_SETDESKWALLPAPER, 0, '$oldwallpaperPath', `$fWinIni)
-	"@
-	powershell.exe -nop -command $cmd
+    Set-ItemProperty -Path 'HKCU:\Control Panel\Desktop' -Name WallpaperStyle -Value 10;
+    Set-ItemProperty -Path 'HKCU:\Control Panel\Desktop' -Name TileWallpaper -Value 0;
+
+    Add-Type -TypeDefinition @'
+        using System;
+        using System.Runtime.InteropServices;
+        public class Params {
+            [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+            public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+        }
+'@;
+
+    $UpdateIniFile = 0x01;
+    $SendChangeEvent = 0x02;
+    $fWinIni = $UpdateIniFile -bor $SendChangeEvent;
+
+    [Params]::SystemParametersInfo(0x0014, 0, $oldPath, $fWinIni);
+    Write-Host -ForegroundColor Green "Wallpaper restored to: $oldPath";
+}
 ```

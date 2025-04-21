@@ -1,22 +1,22 @@
 ---
-title: ATT&CK - Execution Phase
-description: Demonstrate the execution phase of an attack
-author: Chris Gerritz, Datto
-created: 02/19/2023
-achievements:
-duration: 20
-range:
+Title: ATT&CK - Execution Phase
+Description: Demonstrate the execution phase of an attack
+Author: Chris Gerritz, Datto
+Created: 04/07/2025
+Achievements:
+Duration: 20
+Range:
 - Windows
-applications:
+Applications:
 - Terminal (Command prompt)
 - PowerShell
 - Datto EDR
 - SysInternals
 - Office
 - Adobe Reader
-external:
+External:
 - attack.mitre.org
-- rightofboom.infocyte.com
+- allitshop.infocyte.com
 - live.sysinternals.com/psexec.exe
 - github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.001/src/x64/T1055.001.dll
 ---
@@ -67,7 +67,8 @@ Ignore this if you already ran it in a previous lab and are re-using the same Po
 	#Define a random number (This will be used to force Datto EDR not to deduplicate repeated commands during testing)
 	$n = 1000+$(Get-Random -Max 999)
 	# Bypass signed script controls
-	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass
+	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force
+
 	```
 -----
 ## Instructions

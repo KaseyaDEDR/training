@@ -1,21 +1,21 @@
 ---
-title: Initialize Lab Setup
-description: Introduce post-compromise attack behaviors and EDR defenses
-author: Chris Gerritz, Datto
-created: 02/19/2023
-achievements:
-duration: 10
-range:
+Title: Initialize Lab Setup
+Description: Introduce post-compromise attack behaviors and EDR defenses
+Author: Chris Gerritz, Datto
+Created: 04/07/2025
+Achievements:
+Duration: 10
+Range:
 - Windows
-applications:
+Applications:
 - Terminal (Command prompt)
 - PowerShell
 - Datto EDR
 - SysInternals
 - Office
 - Adobe Reader
-external:
-- rightofboom.infocyte.com
+External:
+- allitshop.infocyte.com
 - prismlearning.cloud
 ---
 
