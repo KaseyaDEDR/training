@@ -44,6 +44,7 @@ Dummy users:
   - `net user samson Password1! /ADD /FULLNAME:"Samson - Accounting'`
 - Brenda from IT
   - `net user brenda Password1! /ADD /FULLNAME:"Brenda - IT Helpdesk'`
+  - `net localgroup administrators brenda /ADD`
 
 Add some dummy software that might be found on an accountant's workstation:
 - Office
