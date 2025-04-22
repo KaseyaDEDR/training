@@ -39,21 +39,6 @@ The purpose of this lab is to simulate lateral movement techniques used by attac
 
 ---
 
-## Preparation Instructions
-
-1. Open **PowerShell** as an administrator:
-   - Right-click PowerShell.
-   - Select "Run as Administrator."
-2. Prepare the environment by running the following:
-   ```PowerShell
-   # Define a random delay number (used to randomize operations)
-   $n = 1000 + $(Get-Random -Max 999)
-   # Bypass signed script controls
-   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force
-   ```
-
----
-
 ## Instructions
 
 ### 1. Add Guest to Remote Desktop Users Group
