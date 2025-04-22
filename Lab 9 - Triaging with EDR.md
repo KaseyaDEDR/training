@@ -21,7 +21,7 @@ The purpose of these labs is to introduce post-compromise attack behaviors and E
 
 This next section will have us log into the Datto EDR console and review the attack behaviors we just conducted from the defender's point of view.
 
-s> EDR is not perfect so we have to temper our expectations. A Windows host is buzzing with millions of internal, hidden events every minute. EDR, as a technology, has to be specific on what events to capture and to what level of detail. Process information we will review today is one of the most effective sources of information, especially for attacks involving malicious behaviors of known good operating systems utilities.
+EDR is not perfect so we have to temper our expectations. A Windows host is buzzing with millions of internal, hidden events every minute. EDR, as a technology, has to be specific on what events to capture and to what level of detail. Process information we will review today is one of the most effective sources of information, especially for attacks involving malicious behaviors of known good operating systems utilities.
 
 
 ## Objectives
