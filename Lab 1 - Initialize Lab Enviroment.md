@@ -69,9 +69,9 @@ Add some dummy software that might be found on an accountant's workstation:
 1. Create a **Prism Cyber Learning Platform** Account 
    - Navigate to https://prismlearning.cloud 
    - Select 'Sign up now'
-   - Enrollment code: **BOOM**
+   - Enrollment code: **KSL2025**
   
-  	s> Tutorial Video (if necessary): https://prism-courses.s3.amazonaws.com/tutorials/Prism+-+Account+Creation.mp4
+  	s> Tutorial Video (if necessary): https://prism-courses.s3.amazonaws.com/tutorials/Prism+-+Account+Creation.mp4 (BROKEN)
 
 2. You will need to verify your email by first clicking 'Send verification code' 
    
@@ -92,7 +92,7 @@ Add some dummy software that might be found on an accountant's workstation:
 1. Start your range virtual machine
    - From the dashboard, click '**Start**' on your virtual machine
    
-   s> For 20+ students, this process can take up to 15 minutes
+   s> For 50+ students, this process can take up to 10 minutes so start it early in the session
   
 2. Log into the range
    - Click 'Range' icon on the left
