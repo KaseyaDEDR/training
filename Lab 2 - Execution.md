@@ -53,23 +53,6 @@ In order to grant the attacker additional functionality such as recon, lateral m
 | **Applications** | All applications needed     |
 | **Needed Files** | None |
 
-
-## Preparation Instructions
-
-Ignore this if you already ran it in a previous lab and are re-using the same Powershell window.
-
-1. Open powershell as an administrator
-	- Right click Powershell
-	- Click "Run as Administrator"
-2. Prepare the enviroment with some variables we will use later
-	- Copy and paste this command into the terminal:
-	```PowerShell
-	#Define a random number (This will be used to force Datto EDR not to deduplicate repeated commands during testing)
-	$n = 1000+$(Get-Random -Max 999)
-	# Bypass signed script controls
-	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force
-
-	```
 -----
 ## Instructions
 
