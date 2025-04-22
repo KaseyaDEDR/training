@@ -73,23 +73,6 @@ Add some dummy software that might be found on an accountant's workstation:
 | **Needed Files** | None |
 
 
-## Preparation Instructions
-
-Ignore this if you already ran it in a previous lab and are re-using the same Powershell window.
-
-1. Open powershell as an administrator
-	- Right click Powershell
-	- Click "Run as Administrator"
-2. Prepare the enviroment with some variables we will use later
-	- Run the following:
-	```PowerShell
-	#Define a random number (This will be used to force Datto EDR not to deduplicate repeated commands during testing)
-	$n = 1000+$(Get-Random -Max 999)
-	# Bypass signed script controls
-	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force
-	```
-
-
 ## Instructions
 
 For each of these labs, you will need your Powershell window open. You can use the same window for all labs. You will be copying and pasting commands into the terminal and then evaluating the output.
