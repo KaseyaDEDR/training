@@ -39,22 +39,6 @@ In Lab 5, we will demonstrate some popular places to place malware references th
 2. Demonstate some popular persistence methods and locations
    
 
-## Preparation Instructions
-
-Ignore this if you already ran it in a previous lab and are re-using the same Powershell window.
-
-1. Open powershell as an administrator
-	- Right click Powershell
-	- Click "Run as Administrator"
-2. Prepare the enviroment with some variables we will use later
-	- Run the following:
-	```PowerShell
-	#Define a random number (This will be used to force Datto EDR not to deduplicate repeated commands during testing)
-	$n = 1000+$(Get-Random -Max 999)
-	# Bypass signed script controls
-	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force
-	```
-
 ## Requirements
 
 |                  |                             |
