@@ -120,6 +120,25 @@ Add some dummy software that might be found on an accountant's workstation:
 5. In another browser window (outside the lab enviroment), log into the Datto EDR console:
    - https://rightofboom.infocyte.com
 
+## Virtual Machine Preparations
+
+Everytime you open a Powershell window, we want a session id to be displayed (it will be stored as $n and used by the commands we run to avoid deduplication of alerts).  
+If you open powershell and do not see a session Id number printed, add this to your powershell profile (path is found in $Profile)
+
+1. Open powershell as an administrator
+	- Right click Powershell
+	- Click "Run as Administrator"
+2. Prepare the enviroment with some variables we will use later
+	- Copy and paste this command into the terminal:
+	```PowerShell
+	#Define a random number (This will be used to force Datto EDR not to deduplicate repeated commands during testing)
+	$global:n = 1000+$(Get-Random -Max 999)
+	Write-Host "New Session Id: $n"
+	# Bypass signed script controls
+	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force
+
+	```
+
 <!--
 	# H1
 	## H2
