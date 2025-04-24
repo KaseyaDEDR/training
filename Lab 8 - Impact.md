@@ -14,6 +14,7 @@ Applications:
 - SysInternals
 - LibreOffice
 - Gimp
+- Ransomware Simulation Binary
 External:
 - attack.mitre.org
 - allitshop.infocyte.com
@@ -133,3 +134,104 @@ powershell -NoProfile -NoLogo -ExecutionPolicy Bypass -Command {
     Write-Host -ForegroundColor Green "Wallpaper restored to: $oldPath";
 }
 ```
+---
+
+### 3. Ransomware Simulation – LockBit Black (Advanced / Optional)
+
+> **⚠️ EXTREME CAUTION**
+> 
+> * Running the following PowerShell command will **intentionally encrypt files and isolate your system to simulate real ransomware behavior**.  
+> * **Only execute it in an isolated lab VM or disposable snapshot** where you have **verified rollback or re-image capability**.  
+> * Datto EDR will quarantine or network-isolate the host; you must have privileges (and a plan) to release or restore the endpoint afterward.  
+> * **Do _not_ run this on production systems or any machine containing data you cannot lose.**
+
+**Goal** Demonstrate the *Data Encrypted for Impact* technique using the open-source **RWSim** utility emulating LockBit Black ransomware.
+
+* MITRE ATT&CK Technique: [T1486 – Impact – Data Encrypted for Impact](https://attack.mitre.org/techniques/T1486)
+
+#### Steps
+
+1. **Prepare**  
+   * Download **`TestRWSimSelfContained.zip`** (provided separately) to the Desktop of your lab VM.  
+   * Ensure you are running the terminal **as Administrator**.
+
+2. **Execute** – copy-and-paste the entire one-liner below:
+
+    ```PowerShell
+    powershell.exe -NoProfile -NoLogo -ExecutionPolicy Bypass -Command {
+        #############################################################################
+        ## RWSim Inline Demo – LockBit Black encryption
+        ## Author: Christopher Gerritz – Datto – ©2025
+        #############################################################################
+
+        $ErrorActionPreference = 'Stop'        
+
+        $ZipName   = 'TestRWSimSelfContained.zip'
+        $HomeRoot  = [Environment]::GetFolderPath('UserProfile')
+        $ExtractTo = Join-Path $HomeRoot 'TestRWSimSelfContained'
+        $DestRoot  = 'C:\RWSimDemo'
+
+        Write-Host @'
+     _______________________________________________________________
+    |                                                               |
+    |   R W S i m   L o c k B i t   B l a c k   D e m o             |
+    |_______________________________________________________________|
+    '@ -ForegroundColor Yellow
+
+        try {
+            # 1 / 5  Locate ZIP
+            Write-Host "[1/5] Locating archive on Desktop..." -ForegroundColor Cyan
+            $zip = Join-Path ([Environment]::GetFolderPath('Desktop')) $ZipName
+            if (-not (Test-Path $zip)) { throw "ZIP not found: $zip" }
+
+            # 2 / 5  Extract
+            Write-Host "[2/5] Extracting to $ExtractTo ..." -ForegroundColor Cyan
+            Remove-Item $ExtractTo -Recurse -Force -ErrorAction SilentlyContinue
+            Expand-Archive -Path $zip -DestinationPath $ExtractTo -Force
+
+            # 3 / 5  Discover paths
+            Write-Host "[3/5] Scanning for RWSim.exe ..." -ForegroundColor Cyan
+            $ExePath = Get-ChildItem -Path $ExtractTo -Filter 'RWSim.exe' -Recurse |
+                       Select-Object -First 1 -ExpandProperty FullName
+            if (-not $ExePath) { throw "RWSim.exe not found under $ExtractTo" }
+
+            $SrcRoot = Split-Path $ExePath -Parent
+            $DataSrc = Join-Path $SrcRoot 'testdata'
+            $NoteSrc = Join-Path $SrcRoot 'rnote.txt'
+            foreach ($p in @($DataSrc,$NoteSrc)) {
+                if (-not (Test-Path $p)) { throw "Required item missing: $p" }
+            }
+
+            # 4 / 5  Copy artefacts
+            Write-Host "[4/5] Copying artefacts to $DestRoot ..." -ForegroundColor Cyan
+            New-Item -ItemType Directory -Path $DestRoot -Force -ErrorAction SilentlyContinue | Out-Null
+            Copy-Item -Path $DataSrc -Destination $DestRoot -Recurse -Force -ErrorAction SilentlyContinue
+            Copy-Item -Path $NoteSrc -Destination $DestRoot -Force -ErrorAction SilentlyContinue
+
+            # 5 / 5  Run RWSim (suppress its stderr)
+            Write-Host "[5/5] Executing RWSim – LockBit Black profile..." -ForegroundColor Cyan
+            Push-Location $DestRoot
+            & $ExePath -encrypt -datafolder (Join-Path $DestRoot 'testdata') -rwtype lockbitblack 2>$null
+            $exit = $LASTEXITCODE
+            Pop-Location
+
+            if ($exit -eq 0) {
+                Write-Host "`Demo complete!  Encrypted files → $DestRoot\testdata" -ForegroundColor Green
+            } else {
+                Write-Host "`RWSim finished with exit code $exit." -ForegroundColor Yellow
+            }
+
+            Write-Host "`n(To remove the extracted folder later: Remove-Item '$ExtractTo' -Recurse -Force)" `
+                       -ForegroundColor DarkGray
+        }
+        catch {
+            Write-Host "`n$($_.Exception.Message)" -ForegroundColor Red
+        }
+    }
+    ```
+
+3. **Cleanup / Revert**  
+   * Release isolation (or restore snapshot) via your EDR console.  
+   * Delete `C:\RWSimDemo` and `TestRWSimSelfContained` if you do not need the evidence.
+
+---
