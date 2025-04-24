@@ -47,6 +47,6 @@ EDR is not perfect so we have to temper our expectations. A Windows host is buzz
 ## Instructions
 
 1. In another browser window (outside the lab enviroment), log into the Datto EDR console:
-   - https://rightofboom.infocyte.com
+   - https://allitshop.infocyte.com
    - We will go through the data we collected together
 
