@@ -117,9 +117,23 @@ Add some dummy software that might be found on an accountant's workstation:
 	s> If you do not see the "SUCCESS" message in your powershell terminal, you did something wrong. Make sure you followed the instructions and copy/paste the ENTIRE command from the above code block.
 
 5. In another browser window (outside the lab enviroment), log into the Datto EDR console:
-   - https://rightofboom.infocyte.com
+   - https://allitshop.infocyte.com
 
 ## Virtual Machine Preparations
+
+The virtual machine will need an EDR agent.  Install it using the following command:
+
+```
+(new-object Net.WebClient).DownloadFile("https://traininglab-files.s3.us-west-1.amazonaws.com/agent.exe", "agent.exe")
+.\agent.exe --url allitshop.infocyte.com --key iu60chsaeo --ignore-versioning --verbose
+```
+ 
+1. Log into the EDR Console: https://allitshop.infocyte.com (instance name: allitshop).  
+2. Navigate to Organizations, click **Connect 2025**, select location "**Las Vegas**".
+3. You will find your agent there.
+
+
+### Powershell
 
 Everytime you open a Powershell window, we want a session id to be displayed (it will be stored as $n and used by the commands we run to avoid de-duplication of alerts that Datto EDR does).
 
@@ -139,11 +153,9 @@ If you open powershell and do not see a session Id number printed, add this to y
 	Write-Host "New Session Id: $n"
 	# Bypass signed script controls
 	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force
-
 	```
 
-
-## Simulated Remote Access Tool (RAT) / Powershell Interface
+### Simulated Remote Access Tool (RAT) / Powershell Interface
 
 The labs begin at the post-compromise step of the attack where you, as the attacker, have achieved administrative privileges and have a running remote access tool (aka "RAT) which grants you a terminal session on the compromised system.
 
