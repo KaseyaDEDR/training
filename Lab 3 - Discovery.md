@@ -110,7 +110,7 @@ echo ==== Antivirus Product ==== >> "$outputFile"
 Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntiVirusProduct | Select-Object displayName, pathToSignedProductExe, pathToSignedReportingExe, productState >> "$outputFile"
 
 echo ==== Terminal Services Remote Host List ==== >> "$outputFile"
-reg query "HKCU\Software\Microsoft\Terminal Server Client\Default" 2>&1 >> "$outputFile"
+reg query "HKCU\Software\Microsoft\Terminal Server Client" 2>&1 >> "$outputFile"
 
 echo ==== Local Accounts ==== >> "$outputFile"
 net user >> "$outputFile"
