@@ -154,7 +154,9 @@ powershell -NoProfile -NoLogo -ExecutionPolicy Bypass -Command {
 #### Steps
 
 1. **Prepare**  
-   * Download **`TestRWSimSelfContained.zip`** (provided separately) to the Desktop of your lab VM.  
+   * Download **`TestRWSimSelfContained.zip`** (provided separately) to the Desktop of your lab VM.
+   * If it is not on your desktop or you are using your own VM, you can download the ransomware simulator here:
+	https://traininglab-files.s3.us-west-1.amazonaws.com/TestRWSimSelfContained.zip
    * Ensure you are running the terminal **as Administrator**.
 
 2. **Execute** – copy-and-paste the entire one-liner below:
