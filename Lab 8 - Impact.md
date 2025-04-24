@@ -179,17 +179,14 @@ powershell -NoProfile -NoLogo -ExecutionPolicy Bypass -Command {
     '@ -ForegroundColor Yellow
 
         try {
-            # 1 / 5  Locate ZIP
             Write-Host "[1/5] Locating archive on Desktop..." -ForegroundColor Cyan
             $zip = Join-Path ([Environment]::GetFolderPath('Desktop')) $ZipName
             if (-not (Test-Path $zip)) { throw "ZIP not found: $zip" }
 
-            # 2 / 5  Extract
             Write-Host "[2/5] Extracting to $ExtractTo ..." -ForegroundColor Cyan
             Remove-Item $ExtractTo -Recurse -Force -ErrorAction SilentlyContinue
             Expand-Archive -Path $zip -DestinationPath $ExtractTo -Force
 
-            # 3 / 5  Discover paths
             Write-Host "[3/5] Scanning for RWSim.exe ..." -ForegroundColor Cyan
             $ExePath = Get-ChildItem -Path $ExtractTo -Filter 'RWSim.exe' -Recurse |
                        Select-Object -First 1 -ExpandProperty FullName
@@ -202,13 +199,11 @@ powershell -NoProfile -NoLogo -ExecutionPolicy Bypass -Command {
                 if (-not (Test-Path $p)) { throw "Required item missing: $p" }
             }
 
-            # 4 / 5  Copy artefacts
             Write-Host "[4/5] Copying artefacts to $DestRoot ..." -ForegroundColor Cyan
             New-Item -ItemType Directory -Path $DestRoot -Force -ErrorAction SilentlyContinue | Out-Null
             Copy-Item -Path $DataSrc -Destination $DestRoot -Recurse -Force -ErrorAction SilentlyContinue
             Copy-Item -Path $NoteSrc -Destination $DestRoot -Force -ErrorAction SilentlyContinue
 
-            # 5 / 5  Run RWSim (suppress its stderr)
             Write-Host "[5/5] Executing RWSim – LockBit Black profile..." -ForegroundColor Cyan
             Push-Location $DestRoot
             & $ExePath -encrypt -datafolder (Join-Path $DestRoot 'testdata') -rwtype lockbitblack 2>$null
