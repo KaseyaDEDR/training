@@ -2,7 +2,7 @@
 Title: Initialize Lab Setup
 Description: Introduce post-compromise attack behaviors and EDR defenses
 Author: Chris Gerritz, Datto
-Created: 04/07/2025
+Created: 04/24/2025
 Achievements:
 Duration: 10
 Range:
@@ -71,9 +71,7 @@ Add some dummy software that might be found on an accountant's workstation:
    - Navigate to https://prismlearning.cloud 
    - Select 'Sign up now'
    - Enrollment code: **KSL2025**
-  
-  	s> Tutorial Video (if necessary): https://prism-courses.s3.amazonaws.com/tutorials/Prism+-+Account+Creation.mp4 (BROKEN)
-
+     
 2. You will need to verify your email by first clicking 'Send verification code' 
    
 3. Look in your email for a **verification code** from Prism Cyber Learning
@@ -82,7 +80,7 @@ Add some dummy software that might be found on an accountant's workstation:
 
 4. Follow the rest of the instructions for inputting account information and let the instructor know you are finished so they can ensure you are enrolled in the course.
 
-	s> Your instructor will provision a virtual machine for you as well. This can take up to 15 minutes.
+	s> Your instructor will provision a virtual machine for you when before the class begins.
    
 5. Give your email address to the instructor so they can add you to the Datto EDR instance we will be using.
 
