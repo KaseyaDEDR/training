@@ -14,6 +14,7 @@ Applications:
 - SysInternals
 - Office
 - Adobe Reader
+- Ransomware Simulator
 External:
 - allitshop.infocyte.com
 - prismlearning.cloud
@@ -122,14 +123,18 @@ Add some dummy software that might be found on an accountant's workstation:
 
 ## Virtual Machine Preparations
 
-Everytime you open a Powershell window, we want a session id to be displayed (it will be stored as $n and used by the commands we run to avoid deduplication of alerts).  
+Everytime you open a Powershell window, we want a session id to be displayed (it will be stored as $n and used by the commands we run to avoid de-duplication of alerts that Datto EDR does).
+
 If you open powershell and do not see a session Id number printed, add this to your powershell profile (path is found in $Profile)
 
 1. Open powershell as an administrator
 	- Right click Powershell
 	- Click "Run as Administrator"
-2. Prepare the enviroment with some variables we will use later
-	- Copy and paste this command into the terminal:
+2. Type:
+	```Powershell
+	notepad $Profile
+	```
+2. Copy and paste the below code into your profile found at $Profile:
 	```PowerShell
 	#Define a random number (This will be used to force Datto EDR not to deduplicate repeated commands during testing)
 	$global:n = 1000+$(Get-Random -Max 999)
@@ -137,6 +142,21 @@ If you open powershell and do not see a session Id number printed, add this to y
 	# Bypass signed script controls
 	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force
 
+	```
+
+
+## Simulated Remote Access Tool (RAT) / Powershell Interface
+
+The labs begin at the post-compromise step of the attack where you, as the attacker, have achieved administrative privileges and have a running remote access tool (aka "RAT) which grants you a terminal session on the compromised system.
+
+To simulate this, we will open Powershell via the binary found here: `C:\Users\Public\rat.exe`
+
+This binary opens powershell which will act as our simulated remote access tool (RAT).  All commands in the labs need to be run from this window for the best simulated experiance.
+
+
+> Note: If this binary does not exist, run the following command in Powershell:
+	```Powershell
+	copy C:\Windows\system32\WindowsPowerShell\v1.0\powerhell.exe C:\Users\Public\rat.exe
 	```
 
 <!--

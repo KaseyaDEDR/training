@@ -51,9 +51,11 @@ In order for a ransom to be effective, skilled attackers often wait till they ha
 
 
 ## Instructions
-For each of these labs, you will need your Powershell window open. You can use the same window for all labs. You will be copying and pasting commands into the terminal and then evaluating the output.
+
+Open a new terminal using `c:\Users\Public\rat.exe` or you can use the same terminal from the previous lab. You will be copying and pasting the lab commands into this terminal session.  If you close this window, remember to re-open `c:\Users\Public\rat.exe` before running any of the labs.
 
 w> All labs require you to be running as an administrator. 
+
 
 ### 1. Inhibit System Recovery
 > *Ransomware's purpose is to restrict access to data by encrypting it till the victim pays the ransom. Inhibiting the ability to restore from backup is essential to making sure the attacker achieves this objective.*

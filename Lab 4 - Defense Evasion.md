@@ -50,9 +50,11 @@ Lab 4 is a light touch on some Defense Evasion techniques (such as disabling ant
 
 
 ## Instructions
-For each of these labs, you will need your Powershell window open. You can use the same window for all labs. You will be copying and pasting commands into the terminal and then evaluating the output.
+
+Open a new terminal using `c:\Users\Public\rat.exe` or you can use the same terminal from the previous lab. You will be copying and pasting the lab commands into this terminal session.  If you close this window, remember to re-open `c:\Users\Public\rat.exe` before running any of the labs.
 
 w> All labs require you to be running as an administrator. 
+
 
 > *While most defensive evasion will be used alongside other techniques to hide them, an explicit defense evasion phase usually will happen where the attacker will disable security tools and logging.*
 

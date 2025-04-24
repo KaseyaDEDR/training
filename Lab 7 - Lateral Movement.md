@@ -41,6 +41,11 @@ The purpose of this lab is to simulate lateral movement techniques used by attac
 
 ## Instructions
 
+Open a new terminal using `c:\Users\Public\rat.exe` or you can use the same terminal from the previous lab. You will be copying and pasting the lab commands into this terminal session.  If you close this window, remember to re-open `c:\Users\Public\rat.exe` before running any of the labs.
+
+w> All labs require you to be running as an administrator. 
+
+
 ### 1. Add Guest to Remote Desktop Users Group
 > *This step simulates an attacker adding a Guest user to the Remote Desktop Users group to enable remote access.*
 
