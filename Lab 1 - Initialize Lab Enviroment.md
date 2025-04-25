@@ -135,9 +135,9 @@ The virtual machine will need an EDR agent.  Install it using the following comm
 
 ### Powershell
 
-Everytime you open a Powershell window, we want a session id to be displayed (it will be stored as $n and used by the commands we run to avoid de-duplication of alerts that Datto EDR does).
+Everytime you open a Powershell window, we want a session id to be displayed (it will be stored as \$n and used by the commands we run to avoid de-duplication of alerts that Datto EDR does).
 
-If you open powershell and do not see a session Id number printed, add this to your powershell profile (path is found in $Profile)
+If you open powershell and do not see a session Id number printed, add this to your powershell profile (path is found in \$Profile)
 
 1. Open powershell as an administrator
 	- Right click Powershell
