@@ -123,13 +123,13 @@ Add some dummy software that might be found on an accountant's workstation:
 
 The virtual machine will need an EDR agent.  Install it using the following command:
 
-```
+```powershell
 (new-object Net.WebClient).DownloadFile("https://traininglab-files.s3.us-west-1.amazonaws.com/agent.exe", "agent.exe")
 .\agent.exe --url allitshop.infocyte.com --key iu60chsaeo --ignore-versioning --verbose
 ```
  
 1. Log into the EDR Console: https://allitshop.infocyte.com (instance name: allitshop).  
-2. Navigate to Organizations, click **Connect 2025**, select location "**Las Vegas**".
+2. Navigate to Organizations, click **Connect Global**, select location "**Las Vegas**".
 3. You will find your agent there.
 
 
@@ -146,7 +146,7 @@ If you open powershell and do not see a session Id number printed, add this to y
 	```Powershell
 	notepad $Profile
 	```
-2. Copy and paste the below code into your profile found at $Profile:
+3. Copy and paste the below code into your profile found at $Profile:
 	```PowerShell
 	#Define a random number (This will be used to force Datto EDR not to deduplicate repeated commands during testing)
 	$global:n = 1000+$(Get-Random -Max 999)
@@ -161,13 +161,15 @@ The labs begin at the post-compromise step of the attack where you, as the attac
 
 To simulate this, we will open Powershell via the binary found here: `C:\Users\Public\rat.exe`
 
-This binary opens powershell which will act as our simulated remote access tool (RAT).  All commands in the labs need to be run from this window for the best simulated experiance.
+Right-click rat.exe and choose Run as Administrator.
 
+This binary opens powershell which will act as our simulated remote access tool (RAT).  All subsequent commands in the labs need to be run from this window for the best simulated experiance.
 
-> Note: If this binary does not exist, run the following command in Powershell:
-	```Powershell
-	copy C:\Windows\system32\WindowsPowerShell\v1.0\powerhell.exe C:\Users\Public\rat.exe
-	```
+> Note: If this binary does not exist, run the following command in PowerShell:  
+>
+> ```powershell
+> Copy-Item "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" "C:\Users\Public\rat.exe"
+> ```
 
 <!--
 	# H1
