@@ -165,7 +165,7 @@ powershell -NoProfile -NoLogo -ExecutionPolicy Bypass -Command {
     powershell.exe -NoProfile -NoLogo -ExecutionPolicy Bypass -Command {
         #############################################################################
         ## RWSim Inline Demo – LockBit Black encryption
-        ## Author: Christopher Gerritz – Datto – ©2025
+        ## Author: Chris Gerritz – Datto – ©2025
         #############################################################################
 
         $ErrorActionPreference = 'Stop'        
