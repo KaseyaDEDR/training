@@ -64,10 +64,13 @@ Add a path reference to the **Registry Run Keys**.
 - MITRE ATT&CK Technique: [ATT&CK T1547.001 - Persistence - Registry Run Key](https://attack.mitre.org/techniques/T1547/001)
 - Copy and paste this command into the terminal:
 	```PowerShell
-	# Registry Run key with calc.exe
 	Write-Host "Adding T1547.001 - Registry Run Key Foothold w/ simulated undetectable malware (calc)"
 	REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "Red Team" /t REG_SZ /F /D "C:\Windows\System32\calc.exe -i $n"
-	#REG DELETE "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "Red Team" /f
+	```
+- [Optional] Cleanup:
+	```PowerShell
+	Write-Host "Removing T1547.001 - Registry Run Key foothold"
+	REG DELETE "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "Red Team" /F
 	```
 
 ### 2. Autostart Folder Shortcut
