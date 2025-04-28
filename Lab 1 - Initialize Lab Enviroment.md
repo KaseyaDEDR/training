@@ -106,15 +106,15 @@ Add some dummy software that might be found on an accountant's workstation:
 	s> All labs require you to be running as an administrator.
 
 4. Run a test command by copy and pasting this command into the terminal:
-	```PowerShell
-	Write-Host -ForegroundColor Cyan "Hello $(whoami). Lets test if you followed these instructions properly..."
-	If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
-		Write-Warning "[Error] You do not have Administrator rights to run this script!`nPlease re-run as an Administrator!"
-	} else {
-		Write-Host -ForegroundColor Cyan "SUCCESS: Powershell is running as an administrator."
-	}
-	```
-	s> If you do not see the "SUCCESS" message in your powershell terminal, you did something wrong. Make sure you followed the instructions and copy/paste the ENTIRE command from the above code block.
+```PowerShell
+Write-Host -ForegroundColor Cyan "Hello $(whoami). Lets test if you followed these instructions properly..."
+If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+	Write-Warning "[Error] You do not have Administrator rights to run this script!`nPlease re-run as an Administrator!"
+} else {
+	Write-Host -ForegroundColor Cyan "SUCCESS: Powershell is running as an administrator."
+}
+```
+s> If you do not see the "SUCCESS" message in your powershell terminal, you did something wrong. Make sure you followed the instructions and copy/paste the ENTIRE command from the above code block.
 
 5. In another browser window (outside the lab enviroment), log into the Datto EDR console:
    - https://allitshop.infocyte.com

