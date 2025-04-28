@@ -114,7 +114,7 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 	Write-Host -ForegroundColor Cyan "SUCCESS: Powershell is running as an administrator."
 }
 ```
-	s> If you do not see the "SUCCESS" message in your powershell terminal, you did something wrong. Make sure you followed the instructions and copy/paste the ENTIRE command from the above code block.
+s> If you do not see the "SUCCESS" message in your powershell terminal, you did something wrong. Make sure you followed the instructions and copy/paste the ENTIRE command from the above code block.
 
 5. In another browser window (outside the lab enviroment), log into the Datto EDR console:
    - https://allitshop.infocyte.com
