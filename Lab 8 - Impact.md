@@ -161,7 +161,7 @@ powershell -NoProfile -NoLogo -ExecutionPolicy Bypass -Command {
 
 	```PowerShell
     $source = "https://traininglab-files.s3.us-west-1.amazonaws.com/TestRWSimSelfContained.zip"
-    $destination = "$env:SystemDrive\Users\Administrator\Desktop\TestRWSimSelfContained.zip"
+    $destination = "$env:userprofile\Desktop\TestRWSimSelfContained.zip"
     Invoke-WebRequest -Uri $source -OutFile $destination
     Write-Host "Download completed successfully to: $destination" -ForegroundColor Green
 	```
