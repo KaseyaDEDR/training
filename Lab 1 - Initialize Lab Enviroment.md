@@ -142,7 +142,7 @@ If you open powershell and do not see a session Id number printed, add this to y
 1. Open powershell as an administrator
 	- Right click Powershell
 	- Click "Run as Administrator"
-2. Type:
+2. Run the following command:
 	```Powershell
 	if (!(Test-Path $Profile)) { New-Item -ItemType File -Path $Profile -Force }; notepad $Profile
 	```
